@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ByteOrder {
+public enum ByteOrder {
     case bigEndian
     case littleEndian
     
@@ -18,7 +18,7 @@ enum ByteOrder {
 /**
  * A class to extract data from a Readable source.
  */
-class BinaryReader: Readable {
+public class BinaryReader: Readable {
     
     private(set) var readable: Readable
     var byteOrder: ByteOrder = ByteOrder.defaultByteOrder

@@ -21,8 +21,6 @@ let package = Package(
         .target(
             name: "BinaryReader",
             dependencies: []),
-        .testTarget(
-            name: "BinaryReaderTests",
-            dependencies: ["BinaryReader"]),
+        
     ]
 )

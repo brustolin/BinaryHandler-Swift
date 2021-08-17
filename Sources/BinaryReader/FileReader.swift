@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FileReader : Readable {
+public class FileReader : Readable {
     private let fileHandle : FileHandle
     
     var position: Int {

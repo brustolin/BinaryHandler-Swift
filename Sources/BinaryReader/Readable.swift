@@ -10,7 +10,7 @@ import Foundation
 /**
  * A protocol that objects adopt to provide a seekable data from its content.
  */
-protocol Readable {
+public protocol Readable {
     
     /**
      The current data position.
@@ -31,6 +31,6 @@ protocol Readable {
     func seekTo(count: Int)
 }
 
-enum ReadableError : Error {
+public enum ReadableError : Error {
     case outOfBounds
 }

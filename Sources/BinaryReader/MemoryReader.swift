@@ -10,7 +10,7 @@ import Foundation
 /**
  * A Readable class to read from a Data object.
  */
-class MemoryReader : Readable {
+public class MemoryReader : Readable {
     private var data : Data
     
     private(set) var position: Int = 0
