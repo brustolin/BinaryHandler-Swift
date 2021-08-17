@@ -23,9 +23,9 @@ public class BinaryReader: Readable {
     private(set) var readable: Readable
     var byteOrder: ByteOrder = ByteOrder.defaultByteOrder
     
-    var position: Int { return readable.position }
+    public var position: Int { return readable.position }
 
-    init(readable: Readable) {
+    public init(readable: Readable) {
         self.readable = readable
     }
 
@@ -47,14 +47,14 @@ public class BinaryReader: Readable {
     /**
      * Reads an UInt8 from the readable.
      */
-    func readUInt8() throws -> UInt8 {
+    public func readUInt8() throws -> UInt8 {
         return try readBytes(count: 1)[0]
     }
     
     /**
      * Reads an Int8 from the readable.
      */
-    func readInt8() throws -> Int8 {
+    public func readInt8() throws -> Int8 {
         let bytes = try readBytes(count: 1)
         return Int8(bitPattern: bytes[0])
     }
@@ -62,14 +62,14 @@ public class BinaryReader: Readable {
     /**
      * Reads an Int16 from the readable using the class byteOrder.
      */
-    func readInt16() throws -> Int16 {
+    public func readInt16() throws -> Int16 {
         return try self.readInt16(byteOrder: self.byteOrder)
     }
     
     /**
      * Reads an Int16 from the readable using the given byteOrder.
      */
-    func readInt16(byteOrder: ByteOrder) throws -> Int16 {
+    public func readInt16(byteOrder: ByteOrder) throws -> Int16 {
         let b = try readable.readBytes(count: 2)
         let int: Int16 = BinaryReader.fromByteArray(b, byteOrder: byteOrder)
         return int
@@ -78,14 +78,14 @@ public class BinaryReader: Readable {
     /**
      * Reads an Int32 from the readable using the class byteOrder.
      */
-    func readInt32() throws -> Int32 {
+    public func readInt32() throws -> Int32 {
         return try self.readInt32(byteOrder: self.byteOrder)
     }
     
     /**
      * Reads an Int32 from the readable using the given byteOrder.
      */
-    func readInt32(byteOrder: ByteOrder) throws -> Int32 {
+    public func readInt32(byteOrder: ByteOrder) throws -> Int32 {
         let b = try readable.readBytes(count: 4)
         let int: Int32 = BinaryReader.fromByteArray(b, byteOrder: byteOrder)
         return int
@@ -94,14 +94,14 @@ public class BinaryReader: Readable {
     /**
      * Reads an UInt32 from the readable using the class byteOrder.
      */
-    func readUInt32() throws -> UInt32 {
+    public func readUInt32() throws -> UInt32 {
         return try self.readUInt32(byteOrder: self.byteOrder)
     }
     
     /**
      * Reads an UInt32 from the readable using the given byteOrder.
      */
-    func readUInt32(byteOrder: ByteOrder) throws -> UInt32 {
+    public func readUInt32(byteOrder: ByteOrder) throws -> UInt32 {
         let b = try readable.readBytes(count: 4)
         let int: UInt32 = BinaryReader.fromByteArray(b, byteOrder: byteOrder)
         return int
@@ -110,14 +110,14 @@ public class BinaryReader: Readable {
     /**
      * Reads an Int64 from the readable using the class byteOrder.
      */
-    func readInt64() throws -> Int64 {
+    public func readInt64() throws -> Int64 {
         return try self.readInt64(byteOrder: self.byteOrder)
     }
     
     /**
      * Reads an Int64 from the readable using the giving byteOrder.
      */
-    func readInt64(byteOrder: ByteOrder) throws -> Int64 {
+    public func readInt64(byteOrder: ByteOrder) throws -> Int64 {
         let b = try readable.readBytes(count: 8)
         let int: Int64 = BinaryReader.fromByteArray(b, byteOrder: byteOrder)
         return int
@@ -126,14 +126,14 @@ public class BinaryReader: Readable {
     /**
      * Reads a Float32 from the readable using the class byteOrder.
      */
-    func readFloat32() throws -> Float32 {
+    public func readFloat32() throws -> Float32 {
        return try readFloat32(byteOrder: byteOrder)
     }
     
     /**
      * Reads a Float32 from the readable using the given byteOrder.
      */
-    func readFloat32(byteOrder: ByteOrder) throws -> Float32 {
+    public func readFloat32(byteOrder: ByteOrder) throws -> Float32 {
         let b = try readable.readBytes(count: 4)
         let float: Float32 = BinaryReader.fromByteArray(b, byteOrder: byteOrder)
         return float
@@ -142,11 +142,11 @@ public class BinaryReader: Readable {
     /**
      * Reads a boolean from the readable.
      */
-    func readBool() throws -> Bool {
+    public func readBool() throws -> Bool {
         return try readUInt8() != 0
     }
     
-    func readString() throws -> String {
+    public func readString() throws -> String {
         
         var header = try readUInt8()
         var length = header & 0x7F
