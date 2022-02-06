@@ -13,27 +13,27 @@ import Foundation
 public class MemoryReader : Readable {
     private var data : Data
     
-    public private(set) var position: Int = 0
+    public private(set) var position: UInt = 0
     
     public init (withData data: Data) {
         self.data = data
     }
     
-    public func readBytes(count: Int) throws -> [UInt8] {
+    public func readBytes(count: UInt) throws -> [UInt8] {
         if position + count > data.count  {
             throw ReadableError.outOfBounds
         }
         
-        let endIndex = position + count
+        let endIndex = Int(position + count)
         
-        var bytes = [UInt8](repeating:0, count: count)
-        data.copyBytes(to: &bytes, from: position..<endIndex)
+        var bytes = [UInt8](repeating:0, count: Int(count))
+        data.copyBytes(to: &bytes, from: Int(position)..<endIndex)
         
         position += count
         return bytes
     }
     
-    public func seekTo(count: Int) {
+    public func seekTo(count: UInt) {
         position = count
     }
     

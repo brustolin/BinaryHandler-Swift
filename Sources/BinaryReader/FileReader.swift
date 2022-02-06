@@ -10,8 +10,8 @@ import Foundation
 public class FileReader : Readable {
     private let fileHandle : FileHandle
     
-    public var position: Int {
-        Int(fileHandle.offsetInFile)
+    public var position: UInt {
+        UInt(fileHandle.offsetInFile)
     }
     
     public init(withFileHandle handle : FileHandle) {
@@ -23,8 +23,8 @@ public class FileReader : Readable {
         self.init(withFileHandle: fileHandle)
     }
     
-    public func readBytes(count: Int) throws -> [UInt8] {
-        let result = fileHandle.readData(ofLength: count).toByteArray()
+    public func readBytes(count: UInt) throws -> [UInt8] {
+        let result = fileHandle.readData(ofLength: Int(count)).toByteArray()
         
         if result.count != count {
             throw ReadableError.outOfBounds
@@ -33,7 +33,7 @@ public class FileReader : Readable {
         return result
     }
         
-    public func seekTo(count: Int) {
+    public func seekTo(count: UInt) {
         fileHandle.seek(toFileOffset: UInt64(count))
     }
     

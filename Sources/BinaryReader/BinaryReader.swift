@@ -23,7 +23,7 @@ public class BinaryReader: Readable {
     private(set) var readable: Readable
     var byteOrder: ByteOrder = ByteOrder.defaultByteOrder
     
-    public var position: Int { return readable.position }
+    public var position: UInt { return readable.position }
 
     public init(readable: Readable) {
         self.readable = readable
@@ -36,11 +36,11 @@ public class BinaryReader: Readable {
      *
      * - Returns: An array of bytes
      */
-    public func readBytes(count: Int) throws -> [UInt8] {
+    public func readBytes(count: UInt) throws -> [UInt8] {
         return try readable.readBytes(count: count)
     }
     
-    public func seekTo(count: Int) {
+    public func seekTo(count: UInt) {
         readable.seekTo(count: count)
     }
         
@@ -154,7 +154,7 @@ public class BinaryReader: Readable {
         var result = ""
                 
         while (length > 0) {
-            let bytes = try readBytes(count: Int(length))
+            let bytes = try readBytes(count: UInt(length))
             result += String(bytes: bytes, encoding: .utf8) ?? ""
             
             if header > 0x7f  {
