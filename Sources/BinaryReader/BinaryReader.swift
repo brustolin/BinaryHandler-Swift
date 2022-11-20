@@ -60,10 +60,17 @@ public class BinaryReader: Readable {
     }
     
     /**
-     * Reads an Int16 from the readable using the class byteOrder.
+     * Reads an UInt16 from the readable using the class byteOrder.
      */
     public func readInt16() throws -> Int16 {
         return try self.readInt16(byteOrder: self.byteOrder)
+    }
+    
+    /**
+     * Reads an Int16 from the readable using the class byteOrder.
+     */
+    public func readUInt16() throws -> UInt16 {
+        return try self.readUInt16(byteOrder: self.byteOrder)
     }
     
     /**
@@ -72,6 +79,15 @@ public class BinaryReader: Readable {
     public func readInt16(byteOrder: ByteOrder) throws -> Int16 {
         let b = try readable.readBytes(count: 2)
         let int: Int16 = BinaryReader.fromByteArray(b, byteOrder: byteOrder)
+        return int
+    }
+    
+    /**
+     * Reads an UInt16 from the readable using the given byteOrder.
+     */
+    public func readUInt16(byteOrder: ByteOrder) throws -> UInt16 {
+        let b = try readable.readBytes(count: 2)
+        let int: UInt16 = BinaryReader.fromByteArray(b, byteOrder: byteOrder)
         return int
     }
     
