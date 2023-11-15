@@ -162,8 +162,12 @@ public class BinaryReader: Readable {
         return try readUInt8() != 0
     }
     
+    public func readString(length : UInt) throws -> String {
+        let bytes = try readBytes(count: UInt(length))
+        return String(bytes: bytes, encoding: .utf8) ?? ""
+    }
+    
     public func readString() throws -> String {
-        
         var header = try readUInt8()
         var length = header & 0x7F
         
