@@ -1,10 +1,3 @@
-//
-//  Readable.swift
-//  BinaryReader
-//
-//  Created by Dhiogo Brustolin on 17/08/21.
-//
-
 import Foundation
 
 /**
@@ -28,7 +21,7 @@ public protocol Readable {
     /**
      * Change the current position.
      */
-    func seekTo(count: UInt)
+    func seekTo(position: UInt) throws
 }
 
 public enum ReadableError : Error {

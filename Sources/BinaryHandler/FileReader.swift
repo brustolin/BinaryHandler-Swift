@@ -1,10 +1,3 @@
-//
-//  FileReader.swift
-//  BinaryReader
-//
-//  Created by Dhiogo Brustolin on 17/08/21.
-//
-
 import Foundation
 
 public class FileReader : Readable {
@@ -33,8 +26,8 @@ public class FileReader : Readable {
         return result
     }
         
-    public func seekTo(count: UInt) {
-        fileHandle.seek(toFileOffset: UInt64(count))
+    public func seekTo(position: UInt) {
+        fileHandle.seek(toFileOffset: UInt64(position))
     }
     
 }

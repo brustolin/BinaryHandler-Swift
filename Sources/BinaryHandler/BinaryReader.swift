@@ -1,17 +1,10 @@
-//
-//  BinaryReader.swift
-//  BinaryReader
-//
-//  Created by Dhiogo Brustolin on 17/08/21.
-//
-
 import Foundation
 
 public enum ByteOrder {
     case bigEndian
     case littleEndian
     
-    static let defaultByteOrder: ByteOrder = (CFByteOrderGetCurrent() == CFByteOrderLittleEndian.rawValue) ? .littleEndian : .bigEndian
+    public static let defaultByteOrder: ByteOrder = (CFByteOrderGetCurrent() == CFByteOrderLittleEndian.rawValue) ? .littleEndian : .bigEndian
 }
 
 
@@ -40,8 +33,8 @@ public class BinaryReader: Readable {
         return try readable.readBytes(count: count)
     }
     
-    public func seekTo(count: UInt) {
-        readable.seekTo(count: count)
+    public func seekTo(position: UInt) throws {
+        try readable.seekTo(position: position)
     }
         
     /**

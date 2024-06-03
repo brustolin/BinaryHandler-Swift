@@ -1,10 +1,3 @@
-//
-//  MemoryReader.swift
-//  BinaryReader
-//
-//  Created by Dhiogo Brustolin on 17/08/21.
-//
-
 import Foundation
 
 /**
@@ -33,8 +26,8 @@ public class MemoryReader : Readable {
         return bytes
     }
     
-    public func seekTo(count: UInt) {
-        position = count
+    public func seekTo(position: UInt) {
+        self.position = position
     }
     
 }

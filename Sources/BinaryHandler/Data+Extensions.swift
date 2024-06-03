@@ -1,10 +1,3 @@
-//
-//  Data+Extensions.swift
-//  BinaryReader
-//
-//  Created by Dhiogo Brustolin on 17/08/21.
-//
-
 import Foundation
 
 extension Data {

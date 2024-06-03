@@ -1,17 +1,20 @@
-// swift-tools-version:5.3
+// swift-tools-version: 5.10
+// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
-    name: "BinaryReader",
+    name: "BinaryHandler",
     products: [
         .library(
-            name: "BinaryReader",
-            targets: ["BinaryReader"]),
+            name: "BinaryHandler",
+            targets: ["BinaryHandler"]),
     ],
     targets: [
         .target(
-            name: "BinaryReader",
-            dependencies: []),
+            name: "BinaryHandler"),
+        .testTarget(
+            name: "BinaryHandlerTests",
+            dependencies: ["BinaryHandler"]),
     ]
 )
