@@ -30,4 +30,7 @@ public class FileReader : Readable {
         fileHandle.seek(toFileOffset: UInt64(position))
     }
     
+    deinit {
+        fileHandle.closeFile()
+    }
 }

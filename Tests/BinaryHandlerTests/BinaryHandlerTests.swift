@@ -11,7 +11,6 @@
             try writer.write(UInt8(5))
             try writer.write(UInt8(6))
             
-            
             let data = MemoryReader(withData: writable.bytes)
             let reader = BinaryReader(readable: data)
             
