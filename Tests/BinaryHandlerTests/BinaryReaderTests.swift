@@ -1,5 +1,5 @@
     import XCTest
-    @testable import BinaryReader
+    @testable import BinaryHandler
     
     final class BinaryReaderTests: XCTestCase {
         
@@ -54,7 +54,7 @@
             let data = MemoryReader(withData: Data([4,5,6]))
             let reader = BinaryReader(readable: data)
             
-            reader.seekTo(count: 2)
+            try? reader.seekTo(position: 2)
             XCTAssertEqual(data.position, 2)
             XCTAssertEqual(try? reader.readUInt8(), 6)
         }
@@ -68,7 +68,7 @@
             let reader = BinaryReader(readable: data)
             
             XCTAssertEqual(try! reader.readString(), string)
-            XCTAssertEqual(data.position, string.count + 1)
+            XCTAssertEqual(Int(data.position), string.count + 1)
         }
         
         func testReadLongString() {
@@ -83,7 +83,7 @@
             let reader = BinaryReader(readable: data)
             
             XCTAssertEqual(try! reader.readString(), "\(firstString)\(secondString)")
-            XCTAssertEqual(data.position, firstString.count + secondString.count + 2)
+            XCTAssertEqual(Int(data.position), firstString.count + secondString.count + 2)
         }
         
         private func toByteArray<T>(_ value: T) -> [UInt8] {
