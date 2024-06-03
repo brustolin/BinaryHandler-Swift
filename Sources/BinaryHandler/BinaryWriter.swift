@@ -26,6 +26,11 @@ public class BinaryWriter: Writable {
         try write(value ? 1 : 0)
     }
     
+    public func writeFixedString(_ value: String) throws {
+        let bytes = Array(value.utf8)
+        try writeBytes(bytes)
+    }
+    
     public func write(_ value: String) throws {
         let bytes = Array(value.utf8)
         var length = bytes.count
@@ -34,7 +39,7 @@ public class BinaryWriter: Writable {
             let header = UInt8(length > 0x7F ? 0xFF : length)
             try write(header)
             try writeBytes(Array(bytes[currentIndex..<currentIndex+Int(header & 0x7F)]))
-            length -= Int(header)
+            length -= Int(header & 0x7F)
            currentIndex += Int(header & 0x7F)
         } while length > 0
         
