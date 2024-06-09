@@ -33,6 +33,7 @@
             XCTAssertEqual(try! reader.readInt16(), Int16(INT16_MAX))
             XCTAssertEqual(data.position, 2)
             XCTAssertNil(try? reader.readUInt8())
+            XCTAssertEqual(writable.position, 2)
         }
         
         func testWriteReadInt32() throws {
@@ -47,6 +48,7 @@
             XCTAssertEqual(try! reader.readInt32(), INT32_MAX)
             XCTAssertEqual(data.position, 4)
             XCTAssertNil(try? reader.readUInt8())
+            XCTAssertEqual(writable.position, 4)
         }
         
         func testWriteReadInt64() throws {
@@ -61,6 +63,7 @@
             XCTAssertEqual(try! reader.readInt64(), INT64_MAX)
             XCTAssertEqual(data.position, 8)
             XCTAssertNil(try? reader.readUInt8())
+            XCTAssertEqual(writable.position, 8)
         }
         
         func testWriteReadFloat32() throws {
@@ -75,6 +78,7 @@
             XCTAssertEqual(try! reader.readFloat32(), Float32(0xFFFF0000))
             XCTAssertEqual(data.position, 4)
             XCTAssertNil(try? reader.readUInt8())
+            XCTAssertEqual(writable.position, 4)
         }
               
         func testSeek() throws {
@@ -106,6 +110,7 @@
             
             XCTAssertEqual(try! reader.readString(length: 11), string)
             XCTAssertEqual(Int(data.position), string.count)
+            XCTAssertEqual(writable.position, 11)
         }
         
         func testWriteReadString() throws {
@@ -120,10 +125,11 @@
             
             XCTAssertEqual(try! reader.readString(), string)
             XCTAssertEqual(Int(data.position), string.count + 1)
+            XCTAssertEqual(writable.position, 12)
         }
         
         func testReadLongString() throws {
-            let longString = (0..<200).map({ String($0) }).joined(separator: ",")
+            let longString = (0..<200).map({ _ in "0" }).joined()
             
             let writable = MemoryWriter()
             let writer = BinaryWriter(writable: writable)
@@ -134,5 +140,6 @@
             let reader = BinaryReader(readable: data)
             
             XCTAssertEqual(try! reader.readString(), longString)
+            XCTAssertEqual(writable.position, 202)
         }
     }

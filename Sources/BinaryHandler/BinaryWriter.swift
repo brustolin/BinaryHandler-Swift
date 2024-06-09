@@ -42,8 +42,6 @@ public class BinaryWriter: Writable {
             length -= Int(header & 0x7F)
            currentIndex += Int(header & 0x7F)
         } while length > 0
-        
-        try writeBytes(bytes)
     }
     
     public static func toByteArray<T>(_ value: T, byteOrder: ByteOrder = ByteOrder.defaultByteOrder) -> [UInt8] {
