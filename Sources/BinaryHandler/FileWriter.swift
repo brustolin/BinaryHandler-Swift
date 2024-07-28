@@ -7,17 +7,17 @@ public class FileWriter: Writable {
         UInt(fileHandle.offsetInFile)
     }
     
-    public init(withFileHandle handle: FileHandle) {
+    public init(fileHandle handle: FileHandle) {
         fileHandle = handle
     }
     
-    public convenience init?(withFilePath filePath: String) {
+    public convenience init?(filePath: String) {
         if !FileManager.default.fileExists(atPath: filePath) {
             FileManager.default.createFile(atPath: filePath, contents: nil, attributes: nil)
         }
         
         guard let fileHandle = FileHandle(forWritingAtPath: filePath) else { return nil }
-        self.init(withFileHandle: fileHandle)
+        self.init(fileHandle: fileHandle)
     }
     
     public func writeBytes(_ bytes: [UInt8]) throws {

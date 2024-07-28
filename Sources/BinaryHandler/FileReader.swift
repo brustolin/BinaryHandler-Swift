@@ -7,13 +7,13 @@ public class FileReader : Readable {
         UInt(fileHandle.offsetInFile)
     }
     
-    public init(withFileHandle handle : FileHandle) {
+    public init(fileHandle handle : FileHandle) {
         fileHandle = handle
     }
     
-    public convenience init?(withFilePath filePath : String) {
+    public convenience init?(filePath : String) {
         guard let fileHandle = FileHandle(forReadingAtPath: filePath) else { return nil }
-        self.init(withFileHandle: fileHandle)
+        self.init(fileHandle: fileHandle)
     }
     
     public func readBytes(count: UInt) throws -> [UInt8] {
