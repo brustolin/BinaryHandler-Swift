@@ -133,6 +133,22 @@ public class BinaryReader: Readable {
     }
     
     /**
+     * Reads an Int64 from the readable using the class byteOrder.
+     */
+    public func readUInt64() throws -> UInt64 {
+        return try self.readUInt64(byteOrder: self.byteOrder)
+    }
+    
+    /**
+     * Reads an Int64 from the readable using the giving byteOrder.
+     */
+    public func readUInt64(byteOrder: ByteOrder) throws -> UInt64 {
+        let b = try readable.readBytes(count: 8)
+        let int: UInt64 = BinaryReader.fromByteArray(b, byteOrder: byteOrder)
+        return int
+    }
+    
+    /**
      * Reads a Float32 from the readable using the class byteOrder.
      */
     public func readFloat32() throws -> Float32 {
@@ -145,6 +161,22 @@ public class BinaryReader: Readable {
     public func readFloat32(byteOrder: ByteOrder) throws -> Float32 {
         let b = try readable.readBytes(count: 4)
         let float: Float32 = BinaryReader.fromByteArray(b, byteOrder: byteOrder)
+        return float
+    }
+    
+    /**
+     * Reads a Float32 from the readable using the class byteOrder.
+     */
+    public func readFloat64() throws -> Float64 {
+       return try readFloat64(byteOrder: byteOrder)
+    }
+    
+    /**
+     * Reads a Float32 from the readable using the given byteOrder.
+     */
+    public func readFloat64(byteOrder: ByteOrder) throws -> Float64 {
+        let b = try readable.readBytes(count: 8)
+        let float: Float64 = BinaryReader.fromByteArray(b, byteOrder: byteOrder)
         return float
     }
     
