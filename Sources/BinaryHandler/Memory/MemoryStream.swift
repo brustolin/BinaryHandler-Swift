@@ -9,7 +9,7 @@ import Foundation
 public class MemoryStream: Streamable {
 
     /// The underlying data storage for the memory stream.
-    private(set) var data: Data
+    public private(set) var data: Data
 
     /// The current position in the stream, indicating where the next read or write operation will occur.
     public private(set) var position: UInt = 0
