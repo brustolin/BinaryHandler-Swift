@@ -1,36 +1,55 @@
 import Foundation
 
-public class BinaryWriter: Writable {
-    private(set) var writable: Writable
-    var byteOrder: ByteOrder = ByteOrder.defaultByteOrder
-    
-    public var position: UInt { return writable.position }
-    
-    public init(writable: Writable) {
-        self.writable = writable
+/// Protocol for writing binary data.
+public protocol BinaryWritable: Writable {
+    associatedtype SourceType: Writable
+    var source: SourceType { get }
+    var byteOrder: ByteOrder { get }
+
+    func write<T: Numeric>(_ value: T, byteOrder: ByteOrder?) throws
+    func write(_ value: Bool) throws
+    func writeFixedString(_ value: String) throws
+    func write(_ value: String) throws
+}
+
+public class BinaryWriter<SourceType: Writable>: BinaryWritable {
+    public let source: SourceType
+    public let byteOrder: ByteOrder
+
+    /**
+     * The current Data position
+     */
+    public var position: UInt { return source.position }
+
+    public init(source: SourceType, byteOrder: ByteOrder = ByteOrder.defaultByteOrder) {
+        self.source = source
+        self.byteOrder = byteOrder
     }
-    
+}
+
+extension BinaryWritable {
+
     public func writeBytes(_ bytes: [UInt8]) throws {
-        try writable.writeBytes(bytes)
+        try source.writeBytes(bytes)
     }
-    
+
     public func seekTo(position: UInt) throws {
-        try writable.seekTo(position: position)
+        try source.seekTo(position: position)
     }
-    
-    public func write<T : Numeric>(_ value: T, byteOrder : ByteOrder? = nil) throws {
-        try writeBytes(BinaryWriter.toByteArray(value, byteOrder: byteOrder ?? self.byteOrder))
+
+    public func write<T: Numeric>(_ value: T, byteOrder: ByteOrder? = nil) throws {
+        try writeBytes(Self.toByteArray(value, byteOrder: byteOrder ?? self.byteOrder))
     }
 
     public func write(_ value: Bool) throws {
         try write(value ? 1 : 0)
     }
-    
+
     public func writeFixedString(_ value: String) throws {
         let bytes = Array(value.utf8)
         try writeBytes(bytes)
     }
-    
+
     public func write(_ value: String) throws {
         let bytes = Array(value.utf8)
         var length = bytes.count
@@ -38,12 +57,12 @@ public class BinaryWriter: Writable {
         repeat {
             let header = UInt8(length > 0x7F ? 0xFF : length)
             try write(header)
-            try writeBytes(Array(bytes[currentIndex..<currentIndex+Int(header & 0x7F)]))
+            try writeBytes(Array(bytes[currentIndex..<currentIndex + Int(header & 0x7F)]))
             length -= Int(header & 0x7F)
-           currentIndex += Int(header & 0x7F)
+            currentIndex += Int(header & 0x7F)
         } while length > 0
     }
-    
+
     public static func toByteArray<T>(_ value: T, byteOrder: ByteOrder = ByteOrder.defaultByteOrder) -> [UInt8] {
         var val = value
         let bytes = withUnsafeBytes(of: &val) { Array($0) }

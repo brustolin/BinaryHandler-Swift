@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -8,13 +8,13 @@ let package = Package(
     products: [
         .library(
             name: "BinaryHandler",
-            targets: ["BinaryHandler"]),
+            targets: ["BinaryHandler"])
     ],
     targets: [
         .target(
             name: "BinaryHandler"),
         .testTarget(
             name: "BinaryHandlerTests",
-            dependencies: ["BinaryHandler"]),
+            dependencies: ["BinaryHandler"])
     ]
 )
