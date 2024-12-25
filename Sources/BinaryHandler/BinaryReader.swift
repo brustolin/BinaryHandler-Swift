@@ -1,8 +1,6 @@
 import Foundation
 
 public protocol BinaryReadable: Readable {
-    associatedtype SourceType: Readable
-    var source: SourceType { get }
     var byteOrder: ByteOrder { get }
 
     func readUInt8() throws -> UInt8
@@ -22,8 +20,8 @@ public protocol BinaryReadable: Readable {
 /**
  * A class to extract data from a Readable source.
  */
-public class BinaryReader<SourceType: Readable>: BinaryReadable {
-    public let source: SourceType
+public class BinaryReader: BinaryReadable {
+    public let source: Readable
     public let byteOrder: ByteOrder
 
     /**
@@ -34,13 +32,11 @@ public class BinaryReader<SourceType: Readable>: BinaryReadable {
     /**
      * Creates a new `BinaryReader` with given readable.
      */
-    public init(source: SourceType, byteOrder: ByteOrder = ByteOrder.defaultByteOrder) {
+    public init(source: Readable, byteOrder: ByteOrder = ByteOrder.defaultByteOrder) {
         self.source = source
         self.byteOrder = byteOrder
     }
-}
-
-extension BinaryReadable {
+    
     /**
      * Reads an array of bytes from the readable.
      *
@@ -52,9 +48,18 @@ extension BinaryReadable {
         return try source.readBytes(count: count)
     }
 
+    /**
+     * Seek the source to the given position.
+     *
+     * - Parameter position: The new position to seek to.
+     */
     public func seekTo(position: UInt) throws {
         try source.seekTo(position: position)
     }
+}
+
+extension BinaryReadable {
+   
 
     /**
      * Reads an UInt8 from the readable.
@@ -89,7 +94,7 @@ extension BinaryReadable {
      * Reads an Int16 from the readable using the given byteOrder.
      */
     public func readInt16(byteOrder: ByteOrder) throws -> Int16 {
-        let b = try source.readBytes(count: 2)
+        let b = try self.readBytes(count: 2)
         let int: Int16 = Self.fromByteArray(b, byteOrder: byteOrder)
         return int
     }
@@ -98,7 +103,7 @@ extension BinaryReadable {
      * Reads an UInt16 from the readable using the given byteOrder.
      */
     public func readUInt16(byteOrder: ByteOrder) throws -> UInt16 {
-        let b = try source.readBytes(count: 2)
+        let b = try self.readBytes(count: 2)
         let int: UInt16 = Self.fromByteArray(b, byteOrder: byteOrder)
         return int
     }
@@ -114,7 +119,7 @@ extension BinaryReadable {
      * Reads an Int32 from the readable using the given byteOrder.
      */
     public func readInt32(byteOrder: ByteOrder) throws -> Int32 {
-        let b = try source.readBytes(count: 4)
+        let b = try self.readBytes(count: 4)
         let int: Int32 = Self.fromByteArray(b, byteOrder: byteOrder)
         return int
     }
@@ -130,7 +135,7 @@ extension BinaryReadable {
      * Reads an UInt32 from the readable using the given byteOrder.
      */
     public func readUInt32(byteOrder: ByteOrder) throws -> UInt32 {
-        let b = try source.readBytes(count: 4)
+        let b = try self.readBytes(count: 4)
         let int: UInt32 = Self.fromByteArray(b, byteOrder: byteOrder)
         return int
     }
@@ -146,7 +151,7 @@ extension BinaryReadable {
      * Reads an Int64 from the readable using the giving byteOrder.
      */
     public func readInt64(byteOrder: ByteOrder) throws -> Int64 {
-        let b = try source.readBytes(count: 8)
+        let b = try self.readBytes(count: 8)
         let int: Int64 = Self.fromByteArray(b, byteOrder: byteOrder)
         return int
     }
@@ -162,7 +167,7 @@ extension BinaryReadable {
      * Reads an Int64 from the readable using the giving byteOrder.
      */
     public func readUInt64(byteOrder: ByteOrder) throws -> UInt64 {
-        let b = try source.readBytes(count: 8)
+        let b = try self.readBytes(count: 8)
         let int: UInt64 = Self.fromByteArray(b, byteOrder: byteOrder)
         return int
     }
@@ -178,7 +183,7 @@ extension BinaryReadable {
      * Reads a Float32 from the readable using the given byteOrder.
      */
     public func readFloat32(byteOrder: ByteOrder) throws -> Float32 {
-        let b = try source.readBytes(count: 4)
+        let b = try self.readBytes(count: 4)
         let float: Float32 = Self.fromByteArray(b, byteOrder: byteOrder)
         return float
     }
@@ -194,7 +199,7 @@ extension BinaryReadable {
      * Reads a Float32 from the readable using the given byteOrder.
      */
     public func readFloat64(byteOrder: ByteOrder) throws -> Float64 {
-        let b = try source.readBytes(count: 8)
+        let b = try self.readBytes(count: 8)
         let float: Float64 = Self.fromByteArray(b, byteOrder: byteOrder)
         return float
     }

@@ -3,8 +3,8 @@ import Foundation
 protocol BinaryStreamable: BinaryReadable, BinaryWritable {
 }
 
-public class BinaryStream<SourceType: Streamable>: BinaryStreamable {
-    public let source: SourceType
+public class BinaryStream: BinaryStreamable {
+    public let source: Streamable
     public let byteOrder: ByteOrder
 
     /**
@@ -15,13 +15,36 @@ public class BinaryStream<SourceType: Streamable>: BinaryStreamable {
     /**
      * Creates a new `BinaryReader` with given readable.
      */
-    public init(source: SourceType, byteOrder: ByteOrder = ByteOrder.defaultByteOrder) {
+    public init(source: Streamable, byteOrder: ByteOrder = ByteOrder.defaultByteOrder) {
         self.source = source
         self.byteOrder = byteOrder
     }
-}
+    
+    /**
+     * Reads an array of bytes from the source.
+     *
+     * - Parameter count: Amount of bytes to read.
+     *
+     * - Returns: An array of bytes
+     */
+    public func readBytes(count: UInt) throws -> [UInt8] {
+        return try source.readBytes(count: count)
+    }
+    
+    /**
+     * Reads an array of bytes from the source.
+     *
+     * - Parameter bytes: Amount of bytes to write.
+     */
+    public func writeBytes(_ bytes: [UInt8]) throws {
+        try source.writeBytes(bytes)
+    }
 
-extension BinaryStreamable {
+    /**
+     * Seek the source to the given position.
+     *
+     * - Parameter position: The new position to seek to.
+     */
     public func seekTo(position: UInt) throws {
         try source.seekTo(position: position)
     }

@@ -2,8 +2,6 @@ import Foundation
 
 /// Protocol for writing binary data.
 public protocol BinaryWritable: Writable {
-    associatedtype SourceType: Writable
-    var source: SourceType { get }
     var byteOrder: ByteOrder { get }
 
     func write<T: Numeric>(_ value: T, byteOrder: ByteOrder?) throws
@@ -25,18 +23,27 @@ public class BinaryWriter<SourceType: Writable>: BinaryWritable {
         self.source = source
         self.byteOrder = byteOrder
     }
-}
-
-extension BinaryWritable {
-
+    
+    /**
+     * Reads an array of bytes from the source.
+     *
+     * - Parameter bytes: Amount of bytes to write.
+     */
     public func writeBytes(_ bytes: [UInt8]) throws {
         try source.writeBytes(bytes)
     }
 
+    /**
+     * Seek the source to the given position.
+     *
+     * - Parameter position: The new position to seek to.
+     */
     public func seekTo(position: UInt) throws {
         try source.seekTo(position: position)
     }
+}
 
+extension BinaryWritable {
     public func write<T: Numeric>(_ value: T, byteOrder: ByteOrder? = nil) throws {
         try writeBytes(Self.toByteArray(value, byteOrder: byteOrder ?? self.byteOrder))
     }
