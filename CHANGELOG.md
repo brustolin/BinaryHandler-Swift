@@ -1,7 +1,7 @@
 
 # Changelog
 
-## 2.0.1
+## 2.1.0
 
 - Added the `clean()` function to the `Writable` protocol. 
 
