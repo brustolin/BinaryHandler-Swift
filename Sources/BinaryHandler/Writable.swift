@@ -7,4 +7,6 @@ public protocol Writable: Seekable {
      * - Parameter data: The data to be written to the target.
      */
     func writeBytes(_ bytes: [UInt8]) throws
+    
+    func clean() throws
 }

@@ -41,6 +41,13 @@ public class BinaryWriter: BinaryWritable {
     public func seekTo(position: UInt) throws {
         try source.seekTo(position: position)
     }
+    
+    /**
+     * Clean the underlying source and move the position to the beginning.
+     */
+    public func clean() throws {
+        try source.clean()
+    }
 }
 
 extension BinaryWritable {

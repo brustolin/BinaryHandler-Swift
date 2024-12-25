@@ -11,8 +11,8 @@ public class BinaryFile: Seekable {
         fileHandle = handle
     }
 
-    public func seekTo(position: UInt) {
-        fileHandle.seek(toFileOffset: UInt64(position))
+    public func seekTo(position: UInt) throws {
+        try fileHandle.seek(toOffset: UInt64(position))
     }
 
     deinit {

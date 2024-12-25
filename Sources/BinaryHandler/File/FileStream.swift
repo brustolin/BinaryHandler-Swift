@@ -19,4 +19,11 @@ public class FileStream: BinaryFile, Streamable {
     public func writeBytes(_ bytes: [UInt8]) throws {
         fileHandle.write(Data(bytes))
     }
+    
+    /**
+     * Clean the file and move the position to the beginning.
+     */
+    public func clean() throws {
+        try fileHandle.truncate(atOffset: 0)
+    }
 }

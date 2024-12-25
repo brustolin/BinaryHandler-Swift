@@ -67,6 +67,14 @@ public class MemoryStream: Streamable {
     }
 
     /**
+     * Clean the underlying data storage and move the position to the beginning.
+     */
+    public func clean() throws {
+        data.removeAll()
+        position = 0
+    }
+    
+    /**
      * Ensures that the underlying data buffer has sufficient capacity for an upcoming write operation.
      *
      * - Parameter additionalBytes: The number of bytes to be added to the current position.

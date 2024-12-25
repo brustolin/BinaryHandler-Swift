@@ -13,4 +13,11 @@ public class FileWriter: BinaryFile, Writable {
     public func writeBytes(_ bytes: [UInt8]) throws {
         fileHandle.write(Data(bytes))
     }
+    
+    /**
+     * Clean the the file and move the position to the beginning.
+     */
+    public func clean() throws {
+        try fileHandle.truncate(atOffset: 0)
+    }
 }

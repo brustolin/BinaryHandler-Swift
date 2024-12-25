@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 2.0.1
+
+- Added the `clean()` function to the `Writable` protocol. 
+
 ## 2.0.0
 
 - Added the `BinaryStream` class, which combines the functionality of `BinaryWriter` and `BinaryReader`.
