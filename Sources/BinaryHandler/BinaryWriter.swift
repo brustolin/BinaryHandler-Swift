@@ -10,8 +10,8 @@ public protocol BinaryWritable: Writable {
     func write(_ value: String) throws
 }
 
-public class BinaryWriter<SourceType: Writable>: BinaryWritable {
-    public let source: SourceType
+public class BinaryWriter: BinaryWritable {
+    public let source: Writable
     public let byteOrder: ByteOrder
 
     /**
@@ -19,7 +19,7 @@ public class BinaryWriter<SourceType: Writable>: BinaryWritable {
      */
     public var position: UInt { return source.position }
 
-    public init(source: SourceType, byteOrder: ByteOrder = ByteOrder.defaultByteOrder) {
+    public init(source: Writable, byteOrder: ByteOrder = ByteOrder.defaultByteOrder) {
         self.source = source
         self.byteOrder = byteOrder
     }
