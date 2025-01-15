@@ -1,8 +1,17 @@
 import Foundation
 
 public class FileStream: BinaryFile, Streamable {
+    
+    /**
+     * Creates a new `FileStream` object to read and write from the given `filePath`.
+     * If the file does not exists and it's not possible to create it, returns `nil`.
+     */
     public convenience init?(filePath: String) {
-        guard let fileHandle = FileHandle(forReadingAtPath: filePath) else { return nil }
+        if !FileManager.default.fileExists(atPath: filePath) {
+            FileManager.default.createFile(atPath: filePath, contents: nil, attributes: nil)
+        }
+        
+        guard let fileHandle = FileHandle(forUpdatingAtPath: filePath) else { return nil }
         self.init(fileHandle: fileHandle)
     }
 
