@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 2.1.1
+
+- Fixes FileStream to create a file if it does not exists.
+
 ## 2.1.0
 
 - Added the `clean()` function to the `Writable` protocol. 
