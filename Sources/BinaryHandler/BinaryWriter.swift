@@ -56,7 +56,7 @@ extension BinaryWritable {
     }
 
     public func write(_ value: Bool) throws {
-        try write(value ? 1 : 0)
+        try write(UInt8(value ? 1 : 0))
     }
 
     public func writeFixedString(_ value: String) throws {
