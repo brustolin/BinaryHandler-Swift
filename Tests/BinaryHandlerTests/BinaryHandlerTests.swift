@@ -3,6 +3,21 @@ import XCTest
 
 final class BinaryHandlerTests: XCTestCase {
 
+    func testWriteReadBool() throws {
+        let stream = MemoryStream(withData: Data())
+        let writer = BinaryWriter(source: stream)
+
+        try writer.write(false)
+        try writer.write(true)
+        
+        let reader = BinaryReader(source: stream)
+        try reader.seekTo(position: 0) // Reset position for reading
+
+        XCTAssertEqual(try? reader.readBool(), false)
+        XCTAssertEqual(try? reader.readBool(), true)
+        XCTAssertEqual(stream.data.count, 2)
+    }
+    
     func testWriteReadUint8() throws {
         let stream = MemoryStream(withData: Data())
         let writer = BinaryWriter(source: stream)
