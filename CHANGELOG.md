@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 2.1.2
+
+- Fixes writing bool as UInt8 instead of Int
+
 ## 2.1.1
 
 - Fixes FileStream to create a file if it does not exists.
